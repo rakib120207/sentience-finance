@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EquiVoice — Assistive Communication AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:         #080c10;
+      --surface:    #0e1520;
+      --border:     #1a2535;
+      --accent:     #3dd6ac;
+      --accent-dim: #1a5c49;
+      --warn:       #e8834a;
+      --text-1:     #e8edf3;
+      --text-2:     #7a8fa6;
+      --text-3:     #3a4f64;
+      --user-bg:    #0f2137;
+      --ai-bg:      #0a1c14;
+      --glow:       0 0 40px rgba(61,214,172,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      overflow: hidden;
+    }
+
+    /* Ambient background mesh */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 10% 0%, rgba(61,214,172,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 90% 100%, rgba(232,131,74,0.04) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      height: 100vh;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 0 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .logo-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+    }
+
+    .logo-name span { color: var(--accent); }
+
+    .logo-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--text-3);
+      text-transform: uppercase;
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--text-2);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 6px var(--accent);
+      animation: pulse-dot 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* ── CONVERSATION ── */
+    .conversation {
+      overflow-y: auto;
+      padding: 28px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .conversation::-webkit-scrollbar { width: 4px; }
+    .conversation::-webkit-scrollbar-track { background: transparent; }
+    .conversation::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* empty state */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 16px;
+      opacity: 0;
+      animation: fade-in 0.8s 0.4s forwards;
+    }
+
+    .empty-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1px solid var(--accent-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--glow);
+    }
+
+    .empty-icon svg { color: var(--accent); }
+
+    .empty-state h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-1);
+      letter-spacing: -0.02em;
+    }
+
+    .empty-state p {
+      font-size: 14px;
+      color: var(--text-2);
+      text-align: center;
+      max-width: 340px;
+      line-height: 1.7;
+    }
+
+    .suggestion-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    .chip {
+      padding: 7px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: all 0.2s;
+      background: transparent;
+    }
+
+    .chip:hover {
+      border-color: var(--accent-dim);
+      color: var(--accent);
+      background: rgba(61,214,172,0.04);
+    }
+
+    /* messages */
+    .message {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      animation: slide-up 0.3s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .message.user { align-items: flex-end; }
+    .message.ai   { align-items: flex-start; }
+
+    .message-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--text-3);
+      padding: 0 4px;
+    }
+
+    .message-bubble {
+      max-width: 76%;
+      padding: 13px 17px;
+      border-radius: 16px;
+      line-height: 1.65;
+      font-size: 14.5px;
+    }
+
+    .message.user .message-bubble {
+      background: var(--user-bg);
+      border: 1px solid #1d3248;
+      border-bottom-right-radius: 4px;
+      color: var(--text-1);
+    }
+
+    .message.ai .message-bubble {
+      background: var(--ai-bg);
+      border: 1px solid var(--accent-dim);
+      border-bottom-left-radius: 4px;
+      color: var(--text-1);
+      box-shadow: 0 0 20px rgba(61,214,172,0.06);
+    }
+
+    .message.ai .message-meta::before {
+      content: '◈ EquiVoice  ';
+      color: var(--accent);
+    }
+
+    /* typing indicator */
+    .typing-bubble {
+      display: none;
+      align-items: flex-start;
+      gap: 12px;
+      animation: slide-up 0.3s ease forwards;
+    }
+
+    .typing-bubble.visible { display: flex; }
+
+    .typing-dots {
+      background: var(--ai-bg);
+      border: 1px solid var(--accent-dim);
+      border-bottom-left-radius: 4px;
+      border-radius: 16px;
+      padding: 14px 18px;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .typing-dots span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.4;
+      animation: bounce 1.2s ease-in-out infinite;
+    }
+
+    .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.30s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+      40% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    /* ── INPUT AREA ── */
+    .input-area {
+      padding: 18px 0 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .emotion-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .emotion-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .emotion-btn {
+      padding: 4px 11px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-2);
+      font-size: 11px;
+      font-family: 'Instrument Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .emotion-btn:hover { border-color: var(--text-3); color: var(--text-1); }
+
+    .emotion-btn.active {
+      border-color: var(--accent-dim);
+      background: rgba(61,214,172,0.08);
+      color: var(--accent);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .input-wrapper {
+      flex: 1;
+      position: relative;
+    }
+
+    textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 13px 16px;
+      color: var(--text-1);
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 14.5px;
+      line-height: 1.5;
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      min-height: 50px;
+      max-height: 140px;
+    }
+
+    textarea::placeholder { color: var(--text-3); }
+
+    textarea:focus {
+      border-color: var(--accent-dim);
+      box-shadow: 0 0 0 3px rgba(61,214,172,0.06);
+    }
+
+    .send-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 13px;
+      background: var(--accent);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s;
+      flex-shrink: 0;
+    }
+
+    .send-btn:hover {
+      background: #4fffc8;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(61,214,172,0.3);
+    }
+
+    .send-btn:active { transform: translateY(0); }
+
+    .send-btn:disabled {
+      background: var(--border);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .send-btn svg { color: #080c10; }
+
+    .bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hint {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--text-3);
+      letter-spacing: 0.05em;
+    }
+
+    .reset-btn {
+      background: none;
+      border: none;
+      color: var(--text-3);
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      transition: color 0.18s;
+      padding: 4px 0;
+    }
+
+    .reset-btn:hover { color: var(--warn); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      color: var(--text-2);
+      opacity: 0;
+      transition: all 0.25s;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── WAVEFORM ── */
+    .waveform {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 20px;
+    }
+
+    .wave-bar {
+      width: 3px;
+      border-radius: 2px;
+      background: var(--accent);
+      opacity: 0.3;
+      animation: wave 1.4s ease-in-out infinite;
+    }
+
+    .wave-bar:nth-child(1) { height: 6px;  animation-delay: 0s; }
+    .wave-bar:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+    .wave-bar:nth-child(3) { height: 20px; animation-delay: 0.2s; }
+    .wave-bar:nth-child(4) { height: 14px; animation-delay: 0.3s; }
+    .wave-bar:nth-child(5) { height: 6px;  animation-delay: 0.4s; }
+
+    .waveform.active .wave-bar { opacity: 1; }
+
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.5); }
+      50%       { transform: scaleY(1); }
+    }
+
+    @keyframes fade-in {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <span class="logo-name">Equi<span>Voice</span></span>
+      <span class="logo-tag">Live Agent</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div class="waveform" id="waveform">
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+      </div>
+      <div class="status-pill">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">connected</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONVERSATION -->
+  <div class="conversation" id="conversation">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">
+        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"/>
+        </svg>
+      </div>
+      <h2>Your voice, amplified.</h2>
+      <p>EquiVoice helps you express yourself clearly and confidently. Type how you feel or what you need — I'll help you say it.</p>
+      <div class="suggestion-chips">
+        <button class="chip" onclick="useSuggestion(this)">I need more time to explain</button>
+        <button class="chip" onclick="useSuggestion(this)">I feel frustrated right now</button>
+        <button class="chip" onclick="useSuggestion(this)">Help me say this kindly</button>
+        <button class="chip" onclick="useSuggestion(this)">I don't understand</button>
+      </div>
+    </div>
+
+    <!-- Typing indicator -->
+    <div class="typing-bubble" id="typingIndicator">
+      <div class="typing-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- INPUT AREA -->
+  <div class="input-area">
+    <div class="emotion-row">
+      <span class="emotion-label">Tone context</span>
+      <button class="emotion-btn active" onclick="setEmotion(this, 'neutral')">Neutral</button>
+      <button class="emotion-btn" onclick="setEmotion(this, 'frustrated')">Frustrated</button>
+      <button class="emotion-btn" onclick="setEmotion(this, 'confused')">Confused</button>
+      <button class="emotion-btn" onclick="setEmotion(this, 'urgent')">Urgent</button>
+      <button class="emotion-btn" onclick="setEmotion(this, 'calm')">Calm</button>
+    </div>
+
+    <div class="input-row">
+      <div class="input-wrapper">
+        <textarea
+          id="userInput"
+          placeholder="Type what you want to express…"
+          rows="1"
+          onkeydown="handleKey(event)"
+          oninput="autoResize(this)"
+        ></textarea>
+      </div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send (Enter)">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="bottom-row">
+      <span class="hint">Enter to send · Shift+Enter for new line</span>
+      <button class="reset-btn" onclick="resetConversation()">↺ reset session</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<script>
+  const API = 'http://127.0.0.1:8000';
+  let currentEmotion = 'neutral';
+  let isLoading = false;
+
+  // ── Emotion selector ──
+  function setEmotion(btn, emotion) {
+    document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentEmotion = emotion;
+  }
+
+  // ── Use suggestion chip ──
+  function useSuggestion(chip) {
+    const input = document.getElementById('userInput');
+    input.value = chip.textContent;
+    autoResize(input);
+    input.focus();
+  }
+
+  // ── Auto-resize textarea ──
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+  }
+
+  // ── Handle Enter key ──
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  // ── Send message ──
+  async function sendMessage() {
+    const input = document.getElementById('userInput');
+    const text = input.value.trim();
+    if (!text || isLoading) return;
+
+    isLoading = true;
+    input.value = '';
+    autoResize(input);
+    document.getElementById('sendBtn').disabled = true;
+
+    // Hide empty state
+    document.getElementById('emptyState').style.display = 'none';
+
+    // Show user message
+    appendMessage('user', text);
+
+    // Show typing indicator
+    showTyping(true);
+    activateWaveform(true);
+
+    try {
+      const res = await fetch(`${API}/speak`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, emotion_hint: currentEmotion })
+      });
+
+      if (!res.ok) throw new Error(`Server error: ${res.status}`);
+      const data = await res.json();
+
+      showTyping(false);
+      appendMessage('ai', data.response);
+
+    } catch (err) {
+      showTyping(false);
+      appendMessage('ai', "I'm having a moment of difficulty connecting. Please check the server is running and try again.");
+      setStatus('error');
+      console.error(err);
+    } finally {
+      isLoading = false;
+      document.getElementById('sendBtn').disabled = false;
+      activateWaveform(false);
+      input.focus();
+    }
+  }
+
+  // ── Append message bubble ──
+  function appendMessage(role, text) {
+    const conv = document.getElementById('conversation');
+    const typingEl = document.getElementById('typingIndicator');
+
+    const wrap = document.createElement('div');
+    wrap.className = `message ${role}`;
+
+    const meta = document.createElement('div');
+    meta.className = 'message-meta';
+    meta.textContent = role === 'user' ? 'You' : '';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'message-bubble';
+    bubble.textContent = text;
+
+    wrap.appendChild(meta);
+    wrap.appendChild(bubble);
+
+    // Insert before typing indicator
+    conv.insertBefore(wrap, typingEl);
+    conv.scrollTop = conv.scrollHeight;
+  }
+
+  // ── Typing indicator ──
+  function showTyping(show) {
+    const el = document.getElementById('typingIndicator');
+    el.classList.toggle('visible', show);
+    const conv = document.getElementById('conversation');
+    conv.scrollTop = conv.scrollHeight;
+  }
+
+  // ── Waveform animation ──
+  function activateWaveform(active) {
+    document.getElementById('waveform').classList.toggle('active', active);
+  }
+
+  // ── Status indicator ──
+  function setStatus(state) {
+    const dot = document.getElementById('statusDot');
+    const txt = document.getElementById('statusText');
+    if (state === 'error') {
+      dot.style.background = '#e8834a';
+      dot.style.boxShadow = '0 0 6px #e8834a';
+      txt.textContent = 'disconnected';
+    } else {
+      dot.style.background = 'var(--accent)';
+      dot.style.boxShadow = '0 0 6px var(--accent)';
+      txt.textContent = 'connected';
+    }
+  }
+
+  // ── Reset conversation ──
+  async function resetConversation() {
+    try {
+      await fetch(`${API}/reset`, { method: 'POST' });
+    } catch (e) { /* silent */ }
+
+    // Clear messages, show empty state
+    const conv = document.getElementById('conversation');
+    const children = Array.from(conv.children);
+    children.forEach(c => {
+      if (c.id !== 'emptyState' && c.id !== 'typingIndicator') c.remove();
+    });
+
+    document.getElementById('emptyState').style.display = 'flex';
+    showToast('Session reset — ready to start again');
+    setStatus('connected');
+  }
+
+  // ── Toast notification ──
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2400);
+  }
+
+  // ── Health check on load ──
+  window.addEventListener('load', async () => {
+    try {
+      const res = await fetch(`${API}/`);
+      if (res.ok) {
+        showToast('Backend connected ✓');
+      }
+    } catch {
+      setStatus('error');
+      showToast('Cannot reach backend — start uvicorn');
+    }
+  });
+</script>
+</body>
+</html>
