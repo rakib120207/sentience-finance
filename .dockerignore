@@ -1,0 +1,9 @@
+.env
+firebase-key.json
+__pycache__
+*.pyc
+*.pyo
+.git
+venv/
+check_models.py
+test_gemini.py
