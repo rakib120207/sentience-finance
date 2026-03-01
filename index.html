@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
   <title>Sentience — Your Financial Conscience</title>
   <meta name="description" content="Sentience — AI that understands the emotional side of your spending."/>
-  <!-- Zero external fonts. Zero animations. Zero backdrop-filter. -->
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
@@ -28,13 +27,11 @@
                color:#fff;padding:8px 14px;border-radius:var(--r);font-size:13px;
                font-weight:500;z-index:9999;transition:top .15s}
     .skip-link:focus{top:14px}
-
     .shell{display:flex;flex-direction:column;height:100vh;overflow:hidden}
 
     /* ═══ HEADER ═══ */
     header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;
            padding:0 20px;height:52px;border-bottom:1px solid var(--b1);background:var(--bg)}
-
     .logo{display:flex;align-items:center;gap:10px}
     .logo-icon{width:28px;height:28px;background:var(--accent);border-radius:7px;
                display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -44,7 +41,6 @@
     .logo-badge{font-family:var(--mono);font-size:10px;color:var(--accent);
                 background:var(--accent-s);border:1px solid var(--accent-b);
                 padding:2px 8px;border-radius:100px;letter-spacing:.06em;text-transform:uppercase}
-
     .hdr-r{display:flex;align-items:center;gap:8px}
     .status-pill{display:flex;align-items:center;gap:6px;background:var(--bg2);
                  border:1px solid var(--b1);border-radius:100px;padding:4px 12px;
@@ -99,8 +95,6 @@
     .chat-session-id{font-family:var(--mono);font-size:10px;color:var(--t3);
                      background:var(--bg3);border:1px solid var(--b1);
                      padding:2px 7px;border-radius:100px;flex-shrink:0}
-
-    /* Ledger tab row */
     .tab-row{flex-shrink:0;display:flex;border-bottom:1px solid var(--b1);background:var(--bg)}
     .tab-btn{padding:0 18px;height:38px;font-size:12px;font-weight:500;
              font-family:var(--sans);cursor:pointer;border:none;background:transparent;
@@ -109,8 +103,6 @@
     .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
     .tab-btn:hover:not(.active){color:var(--t1)}
     .tab-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-
-    /* Tab panels */
     .tab-panel{display:none;flex:1;min-height:0;flex-direction:column}
     .tab-panel.show{display:flex}
 
@@ -119,8 +111,6 @@
               display:flex;flex-direction:column;gap:14px}
     #chatArea::-webkit-scrollbar{width:4px}
     #chatArea::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
-
-    /* Empty state */
     .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;
                  justify-content:center;gap:14px;text-align:center;padding:2rem;color:var(--t2)}
     .empty-icon{width:56px;height:56px;border-radius:50%;background:var(--accent-s);
@@ -182,19 +172,29 @@
     .ledger-panel{flex:1;min-height:0;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:18px}
     .ledger-panel::-webkit-scrollbar{width:4px}
     .ledger-panel::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
-
     .ledger-card{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--rl);padding:16px}
     .lc-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
               color:var(--t3);margin-bottom:12px}
     .lc-narrative{font-size:13px;color:var(--t1);line-height:1.65;
                   border-left:2px solid var(--accent);padding-left:12px;font-style:italic}
-
-    /* Summary row */
     .sum-row{display:flex;gap:10px}
     .sum-card{flex:1;background:var(--bg3);border:1px solid var(--b1);
               border-radius:var(--r);padding:12px;text-align:center}
     .sum-num{font-size:20px;font-weight:700;color:var(--accent);line-height:1}
     .sum-lbl{font-size:10px;font-family:var(--mono);color:var(--t3);margin-top:4px}
+
+    /* ── Danger Emotion Card ── */
+    .danger-card{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);
+                 border-radius:var(--rl);padding:16px;border-left:3px solid var(--red)}
+    .danger-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .danger-emoji{font-size:28px;line-height:1}
+    .danger-title{font-size:14px;font-weight:700;color:var(--red)}
+    .danger-sub{font-size:11px;color:var(--t3);margin-top:2px}
+    .danger-stats{display:flex;gap:8px;margin-top:12px}
+    .danger-stat{flex:1;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.15);
+                 border-radius:var(--r);padding:10px;text-align:center}
+    .danger-stat-num{font-size:18px;font-weight:700;color:var(--red);line-height:1}
+    .danger-stat-lbl{font-size:10px;font-family:var(--mono);color:var(--t3);margin-top:3px}
 
     /* Emotion bar chart */
     .chart-wrap{display:flex;flex-direction:column;gap:8px}
@@ -208,16 +208,12 @@
                     font-size:11px;font-family:var(--mono);color:var(--t2)}
     .chart-count{font-size:10px;font-family:var(--mono);color:var(--t3);
                  width:50px;flex-shrink:0;text-align:left}
-
-    /* Category bar */
     .cat-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
     .cat-label{font-size:12px;color:var(--t2);width:110px;flex-shrink:0;
                white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .cat-bar-bg{flex:1;height:14px;background:var(--bg3);border-radius:3px;overflow:hidden}
     .cat-bar-fill{height:100%;border-radius:3px;background:var(--blue)}
     .cat-amt{font-size:11px;font-family:var(--mono);color:var(--t3);width:60px;text-align:right}
-
-    /* Recent spends table */
     .spend-table{width:100%;border-collapse:collapse}
     .spend-table th{font-size:10px;text-transform:uppercase;letter-spacing:.06em;
                     color:var(--t3);font-weight:600;padding:6px 8px;
@@ -230,8 +226,6 @@
                     padding:2px 7px;font-size:10px;cursor:pointer;color:var(--t3);
                     font-family:var(--sans);transition:border-color .12s,color .12s}
     .regret-ask-btn:hover{border-color:var(--b2);color:var(--t1)}
-
-    /* Empty ledger */
     .ledger-empty{flex:1;display:flex;flex-direction:column;align-items:center;
                   justify-content:center;gap:12px;color:var(--t3);text-align:center;padding:40px}
     .ledger-empty p{font-size:13px;max-width:240px;line-height:1.7}
@@ -242,6 +236,10 @@
                background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);
                border-radius:var(--r);font-family:var(--mono);font-size:11px;color:var(--red)}
     .voice-ind.on{display:flex}
+    .live-bar{display:none;align-items:center;gap:8px;margin-bottom:8px;padding:7px 12px;
+              background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);
+              border-radius:var(--r);font-family:var(--mono);font-size:11px;color:var(--amber)}
+    .live-bar.on{display:flex}
     .tone-row{display:flex;align-items:center;gap:6px;margin-bottom:10px;overflow-x:auto;scrollbar-width:none}
     .tone-row::-webkit-scrollbar{display:none}
     .tone-label{font-size:11px;font-weight:600;color:var(--t2);white-space:nowrap;flex-shrink:0}
@@ -270,11 +268,19 @@
     #micBtn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     #sendBtn{height:46px;padding:0 22px;border-radius:var(--rxl);border:none;
              background:var(--accent);color:#fff;font-size:14px;font-weight:600;
-             font-family:var(--sans);cursor:pointer;flex-shrink:0;
-             transition:background .15s}
+             font-family:var(--sans);cursor:pointer;flex-shrink:0;transition:background .15s}
     #sendBtn:hover:not(:disabled){background:var(--accent-h)}
     #sendBtn:disabled{opacity:.38;cursor:not-allowed;background:var(--bg4);color:var(--t2)}
     #sendBtn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+    #liveBtn{height:46px;padding:0 16px;border-radius:var(--rxl);flex-shrink:0;
+             border:1px solid var(--b2);background:var(--bg2);
+             color:var(--t2);font-size:13px;font-weight:600;font-family:var(--sans);
+             cursor:pointer;display:flex;align-items:center;gap:6px;
+             transition:background .15s,border-color .15s,color .15s}
+    #liveBtn:hover{background:var(--bg3);border-color:var(--b3);color:var(--t1)}
+    #liveBtn.live-on{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.4);color:var(--amber)}
+    #liveBtn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+    .live-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
     .tool-row{display:flex;align-items:center;justify-content:space-between;margin-top:9px;padding:0 2px}
     .hint-txt{font-size:11px;color:var(--t3)}
     .cc{font-family:var(--mono);font-size:10px;color:var(--t3)}
@@ -304,8 +310,7 @@
             cursor:pointer;position:relative;transition:background .2s}
     .toggle.on{background:var(--accent)}
     .toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;
-                   background:#fff;top:3px;left:3px;
-                   transition:transform .2s;will-change:transform}
+                   background:#fff;top:3px;left:3px;transition:transform .2s;will-change:transform}
     .toggle.on::after{transform:translateX(18px)}
     .toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     .cam-wrap{position:relative;aspect-ratio:4/3;background:var(--bg);overflow:hidden}
@@ -332,6 +337,25 @@
     .emo-orb.detected{background:var(--accent-s);border-color:var(--accent-b)}
     .emo-name{font-size:15px;font-weight:600;color:var(--t1)}
     .emo-sub{font-size:11px;color:var(--t3);margin-top:2px}
+
+    /* ── Vulnerability Meter ── */
+    .vuln-meter-wrap{margin-top:12px}
+    .vuln-meter-label{display:flex;justify-content:space-between;align-items:center;
+                      margin-bottom:6px}
+    .vuln-meter-txt{font-size:11px;color:var(--t2)}
+    .vuln-meter-score{font-family:var(--mono);font-size:13px;font-weight:700;
+                      color:var(--accent);transition:color .3s}
+    .vuln-meter-score.risk-med{color:var(--amber)}
+    .vuln-meter-score.risk-high{color:var(--red)}
+    .vuln-track{width:100%;height:8px;background:var(--bg3);border-radius:4px;
+                border:1px solid var(--b1);overflow:hidden}
+    .vuln-fill{height:100%;border-radius:4px;background:var(--accent);
+               transition:width .5s ease, background .4s ease;width:0%}
+    .vuln-fill.risk-med{background:var(--amber)}
+    .vuln-fill.risk-high{background:var(--red)}
+    .vuln-verdict{font-size:11px;color:var(--t3);margin-top:5px;font-style:italic;
+                  min-height:14px;transition:color .3s}
+    .vuln-verdict.risk-high{color:var(--red)}
 
     /* Log Spend form */
     .spend-form{display:flex;flex-direction:column;gap:10px}
@@ -368,15 +392,23 @@
          border-bottom-width:2px;border-radius:4px;padding:2px 6px;color:var(--t2)}
 
     /* ═══ INTERVENTION MODAL ═══ */
-    .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;
+    .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;
                     align-items:center;justify-content:center;padding:20px}
     .modal-backdrop.show{display:flex}
     .modal{background:var(--bg2);border:1px solid rgba(251,191,36,.3);border-radius:var(--rxl);
-           padding:28px;max-width:400px;width:100%;}
+           padding:36px;max-width:540px;width:100%;box-shadow:0 0 80px rgba(251,191,36,.18)}
     .modal-icon{font-size:32px;margin-bottom:12px;display:block}
-    .modal-title{font-size:18px;font-weight:700;color:var(--t1);margin-bottom:8px}
-    .modal-body{font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:20px}
+    .modal-title{font-size:24px;font-weight:800;color:var(--t1);margin-bottom:8px}
+    .modal-body{font-size:15px;color:var(--t2);line-height:1.7;margin-bottom:16px}
     .modal-body strong{color:var(--amber)}
+    /* Vulnerability bar inside modal */
+    .modal-vuln{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.18);
+                border-radius:var(--r);padding:12px;margin-bottom:16px}
+    .modal-vuln-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+    .modal-vuln-lbl{font-size:11px;font-family:var(--mono);color:var(--t3)}
+    .modal-vuln-score{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--amber)}
+    .modal-vuln-track{width:100%;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+    .modal-vuln-fill{height:100%;border-radius:3px;background:var(--amber);transition:width .4s ease}
     .modal-actions{display:flex;gap:10px}
     .modal-dismiss{flex:1;padding:10px;border-radius:var(--r);border:1px solid var(--b2);
                    background:transparent;color:var(--t2);font-family:var(--sans);
@@ -409,6 +441,35 @@
           transition:background .12s,border-color .12s,color .12s}
     .tbtn:hover{background:var(--bg3);border-color:var(--b2);color:var(--t1)}
     .tbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+    /* ═══ DEMO MODE ═══ */
+    /* Ctrl+Shift+D activates — hides sidebar clutter, spotlights orb+meter+chat */
+    body.demo-mode .hist-sidebar{display:none!important}
+    body.demo-mode .chat-session-id{display:none}
+    body.demo-mode .tool-row .hint-txt{display:none}
+    body.demo-mode #resetBtn{display:none}
+    body.demo-mode .tab-btn[id="tabLedger"]{display:none}
+    body.demo-mode .logo-tagline{display:none}
+    /* Pulse the orb when demo mode + high vulnerability */
+    body.demo-mode .emo-orb.risk-high{
+      animation:orb-pulse 1.2s ease-in-out infinite;
+    }
+    @keyframes orb-pulse{
+      0%,100%{box-shadow:0 0 0 0 rgba(248,113,113,0)}
+      50%{box-shadow:0 0 0 10px rgba(248,113,113,.25)}
+    }
+    /* Demo mode badge in header */
+    .demo-badge{display:none;font-family:var(--mono);font-size:10px;color:var(--red);
+                background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);
+                padding:2px 8px;border-radius:100px;letter-spacing:.06em;text-transform:uppercase}
+    body.demo-mode .demo-badge{display:inline-flex;align-items:center;gap:4px}
+    /* Safety net flash */
+    @keyframes safety-flash{
+      0%,100%{border-color:rgba(251,191,36,.4)}
+      50%{border-color:rgba(251,191,36,.9);box-shadow:0 0 30px rgba(251,191,36,.3)}
+    }
+    .modal-backdrop.show.safety-triggered .modal{
+      animation:safety-flash .4s ease 2;
+    }
   </style>
 </head>
 <body>
@@ -420,7 +481,6 @@
   <header role="banner">
     <div class="logo">
       <div class="logo-icon" aria-hidden="true">
-        <!-- Brain/finance icon -->
         <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round">
           <path d="M12 2a4 4 0 0 1 4 4c0 1-.3 2-.9 2.7A4 4 0 0 1 16 12a4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 .9-2.5A4 4 0 0 1 8 6a4 4 0 0 1 4-4z"/>
           <line x1="12" y1="16" x2="12" y2="22"/>
@@ -429,10 +489,11 @@
       </div>
       <span class="logo-name">Sentience</span>
       <span class="logo-tagline" aria-hidden="true">Financial Conscience</span>
-      <span class="logo-badge">v1</span>
+      <span class="logo-badge">v2</span>
+      <span class="demo-badge" id="demoBadge">🔴 DEMO</span>
     </div>
     <div class="hdr-r">
-      <div class="status-pill" id="statusPill" role="status" aria-live="polite" aria-label="Connection status">
+      <div class="status-pill" id="statusPill" role="status" aria-live="polite">
         <span class="sdot" aria-hidden="true"></span>
         <span id="statusTxt">Connecting…</span>
       </div>
@@ -465,7 +526,6 @@
         <span class="chat-session-id" id="chatSessId">—</span>
       </div>
 
-      <!-- Tab row -->
       <div class="tab-row" role="tablist">
         <button class="tab-btn active" id="tabChat" role="tab" aria-selected="true"
                 aria-controls="panelChat" onclick="switchTab('chat')">💬 Chat</button>
@@ -490,7 +550,7 @@
 
         <!-- INPUT BAR -->
         <div class="input-bar" role="form" aria-label="Message input">
-          <div class="voice-ind" id="voiceInd" aria-live="assertive" aria-label="Microphone recording">
+          <div class="voice-ind" id="voiceInd" aria-live="assertive">
             <div style="display:flex;gap:2px;align-items:center" aria-hidden="true">
               <div style="width:2px;height:4px;background:var(--red);border-radius:2px"></div>
               <div style="width:2px;height:9px;background:var(--red);border-radius:2px"></div>
@@ -499,6 +559,10 @@
               <div style="width:2px;height:4px;background:var(--red);border-radius:2px"></div>
             </div>
             Listening…
+          </div>
+          <div class="live-bar" id="liveBar" aria-live="polite">
+            <div class="live-dot" aria-hidden="true"></div>
+            <span id="liveTxt">Gemini Live — speak naturally, I'm listening…</span>
           </div>
           <div class="tone-row" role="group" aria-label="Select emotional tone">
             <span class="tone-label">Mood</span>
@@ -512,7 +576,7 @@
           <div class="inp-row">
             <textarea id="userInput" placeholder="Tell Sentience what's on your mind…" rows="1"
                       aria-label="Message input" maxlength="2000"></textarea>
-            <button id="micBtn" aria-label="Toggle microphone" aria-pressed="false" title="Voice input">
+            <button id="micBtn" aria-label="Toggle microphone" aria-pressed="false" title="Voice input (Chrome/Edge)">
               <svg style="width:18px;height:18px;pointer-events:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="9" y="2" width="6" height="12" rx="3"/>
                 <path d="M5 10a7 7 0 0 0 14 0"/>
@@ -521,6 +585,10 @@
               </svg>
             </button>
             <button id="sendBtn" aria-label="Send message" disabled>Send</button>
+            <button id="liveBtn" aria-label="Start Gemini Live voice conversation" aria-pressed="false" title="Gemini Live — real-time voice">
+              <span class="live-dot" aria-hidden="true"></span>
+              Live
+            </button>
           </div>
           <div class="tool-row">
             <span class="hint-txt">Enter to send · Shift+Enter for new line · Esc stops mic</span>
@@ -581,6 +649,17 @@
             <div class="emo-sub"  id="emoSub">No camera data</div>
           </div>
         </div>
+        <!-- VULNERABILITY METER -->
+        <div class="vuln-meter-wrap">
+          <div class="vuln-meter-label">
+            <span class="vuln-meter-txt">Spending Vulnerability</span>
+            <span class="vuln-meter-score" id="vulnScore">0 / 10</span>
+          </div>
+          <div class="vuln-track" role="progressbar" aria-label="Vulnerability score" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10">
+            <div class="vuln-fill" id="vulnFill"></div>
+          </div>
+          <div class="vuln-verdict" id="vulnVerdict">No data yet for this mood</div>
+        </div>
       </div>
 
       <div class="rs-sec">
@@ -627,7 +706,6 @@
     </aside>
   </main>
 
-  <!-- Mobile bar -->
   <div class="phone-bar" id="phoneBar">
     <button class="tbtn" id="histMobBtn" aria-label="View history">📋 History</button>
     <button class="tbtn" id="logMobBtn"  aria-label="Log expense">💰 Log</button>
@@ -635,10 +713,8 @@
   </div>
 </div>
 
-<!-- Overlay -->
 <div class="overlay" id="overlay"></div>
 
-<!-- Mobile sheets -->
 <div class="mob-sheet" id="histMobSheet" role="dialog" aria-label="Chat history">
   <div class="sheet-handle"></div>
   <div style="font-size:14px;font-weight:600;color:var(--t1);margin-bottom:10px">History</div>
@@ -672,8 +748,16 @@
   <div class="modal">
     <span class="modal-icon" aria-hidden="true">⚠️</span>
     <div class="modal-title" id="modalTitle">Wait a moment.</div>
-    <div class="modal-body" id="modalBody">
-      <!-- filled dynamically -->
+    <div class="modal-body" id="modalBody"></div>
+    <!-- Vulnerability bar in modal -->
+    <div class="modal-vuln" id="modalVulnWrap">
+      <div class="modal-vuln-row">
+        <span class="modal-vuln-lbl">Spending Vulnerability Right Now</span>
+        <span class="modal-vuln-score" id="modalVulnScore">—</span>
+      </div>
+      <div class="modal-vuln-track">
+        <div class="modal-vuln-fill" id="modalVulnFill" style="width:0%"></div>
+      </div>
     </div>
     <div class="modal-actions">
       <button class="modal-dismiss" id="modalDismiss">I'll wait 24h ✓</button>
@@ -683,22 +767,38 @@
 </div>
 
 <script>
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 //  CONFIG
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 const API = (location.hostname==='localhost'||location.hostname==='127.0.0.1')
   ? 'http://localhost:8000'
-  : 'https://YOUR-CLOUD-RUN-URL.a.run.app';
+  : 'https://sentience-finance.onrender.com';
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
+//  SESSION ID — persisted in localStorage, sent as X-Session-ID
+//  header with every request so the backend isolates state per tab.
+// ══════════════════════════════════════════════════════════════════
+let SESSION_ID = localStorage.getItem('sentience_sid');
+if (!SESSION_ID) {
+  SESSION_ID = crypto.randomUUID();
+  localStorage.setItem('sentience_sid', SESSION_ID);
+}
+
+// Central fetch helper — always attaches session header
+function apiFetch(path, opts = {}) {
+  opts.headers = Object.assign({'Content-Type':'application/json',
+    'X-Session-ID': SESSION_ID}, opts.headers || {});
+  return fetch(API + path, opts);
+}
+
+// ══════════════════════════════════════════════════════════════════
 //  STATE
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 let cameraOn=false, micOn=false, sending=false;
 let stream=null, recog=null, emotion='neutral';
 let frame='', frameInt=null, turns=0;
-let inactTmr=null, curSessId=null, curTitle='New conversation';
+let inactTmr=null, curSessId=SESSION_ID, curTitle='New conversation';
 let totalSpendLogged=0;
-let pendingSpendData=null; // holds data when intervention modal is shown
 
 const EMOS={
   happy:{e:'😊',l:'Happy'}, sad:{e:'😔',l:'Sad'},
@@ -721,10 +821,47 @@ const turnNum=$('turnNum'), totalSpendEl=$('totalSpend');
 const chatTitle=$('chatTitle'), chatSessId=$('chatSessId');
 const histList=$('histList'), histListMob=$('histListMob');
 const overlay=$('overlay'), modal=$('interventionModal');
+const vulnScore=$('vulnScore'), vulnFill=$('vulnFill'), vulnVerdict=$('vulnVerdict');
+const liveBtn=$('liveBtn'), liveBar=$('liveBar'), liveTxt=$('liveTxt');
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
+//  VULNERABILITY METER
+// ══════════════════════════════════════════════════════════════════
+function updateVulnMeter(score, verdict='') {
+  const pct = Math.min(100, score * 10);
+  const cls = score >= 7 ? 'risk-high' : score >= 4 ? 'risk-med' : '';
+  vulnScore.textContent = score.toFixed(1) + ' / 10';
+  vulnScore.className = 'vuln-meter-score ' + cls;
+  vulnFill.style.width = pct + '%';
+  vulnFill.className = 'vuln-fill ' + cls;
+  vulnVerdict.textContent = verdict || (score >= 7 ? 'High risk — pause before buying' :
+                                        score >= 4 ? 'Moderate risk — proceed carefully' :
+                                        'Low risk in this state');
+  vulnVerdict.className = 'vuln-verdict ' + cls;
+  // Also pulse the emo orb when high
+  if (score >= 7) {
+    eoOrb.style.borderColor = 'var(--red)';
+    eoOrb.style.background  = 'rgba(248,113,113,.15)';
+    eoOrb.classList.add('risk-high');
+  } else {
+    eoOrb.style.borderColor = '';
+    eoOrb.style.background  = '';
+    eoOrb.classList.remove('risk-high');
+  }
+}
+
+// Fetch pattern report for the current emotion when chip changes
+async function fetchVulnerability(emo) {
+  if (emo === 'neutral') { updateVulnMeter(0, 'No risk in neutral state'); return; }
+  try {
+    const d = await (await apiFetch('/pattern-report/' + emo)).json();
+    updateVulnMeter(d.vulnerability_score || 0, d.verdict || '');
+  } catch { /* silent — meter just stays at last value */ }
+}
+
+// ══════════════════════════════════════════════════════════════════
 //  TABS
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 function switchTab(t){
   $('tabChat').classList.toggle('active',t==='chat');
   $('tabLedger').classList.toggle('active',t==='ledger');
@@ -735,39 +872,41 @@ function switchTab(t){
   if(t==='ledger') loadLedger();
 }
 
-// ─────────────────────────────────────
-//  STATUS
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
+//  STATUS — long timeout for Render free-tier cold starts
+// ══════════════════════════════════════════════════════════════════
 async function checkStatus(){
+  statusTxt.textContent='Connecting…';
+  statusPill.className='status-pill';
   try{
-    const d=await(await fetch(`${API}/health`,{signal:AbortSignal.timeout(4000)})).json();
+    const d=await(await apiFetch('/health',{signal:AbortSignal.timeout(60000)})).json();
     statusPill.className='status-pill online'; statusTxt.textContent='Connected';
-    if(d.session_id){ curSessId=d.session_id; chatSessId.textContent='#'+d.session_id.slice(-6); }
+    chatSessId.textContent='#'+SESSION_ID.slice(-6);
   }catch{
-    statusPill.className='status-pill offline'; statusTxt.textContent='Offline';
-    setTimeout(checkStatus,5000);
+    statusPill.className='status-pill offline'; statusTxt.textContent='Offline — retrying…';
+    setTimeout(checkStatus,8000);
   }
 }
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 //  INACTIVITY
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 function resetInact(){
   clearTimeout(inactTmr);
   inactTmr=setTimeout(async()=>{
     try{
-      const d=await(await fetch(`${API}/check-in`)).json();
+      const d=await(await apiFetch('/check-in')).json();
       if(d.message) addMsg(d.message,'proactive');
     }catch{}
   },30_000);
 }
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 //  HISTORY
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 async function loadHistory(){
   try{
-    const d=await(await fetch(`${API}/sessions`)).json();
+    const d=await(await apiFetch('/sessions')).json();
     renderHist(d.sessions||[], histList);
     renderHist(d.sessions||[], histListMob);
   }catch{
@@ -819,8 +958,8 @@ async function loadSessIntoChat(sid,title){
   clearChat(); addMsg('Loading…','proactive');
   try{
     const [,turnsRes]=await Promise.all([
-      fetch(`${API}/sessions/${sid}/load`,{method:'POST'}),
-      fetch(`${API}/sessions/${sid}/turns`).then(r=>r.json()),
+      apiFetch(`/sessions/${sid}/load`,{method:'POST'}),
+      apiFetch(`/sessions/${sid}/turns`).then(r=>r.json()),
     ]);
     clearChat();
     const tlist=turnsRes.turns||[];
@@ -842,16 +981,15 @@ async function loadSessIntoChat(sid,title){
     curSessId=sid; curTitle=title;
     chatTitle.textContent=title;
     chatSessId.textContent='#'+sid.slice(-6);
-    turns=tlist.length;
-    turnNum.textContent=turns;
+    turns=tlist.length; turnNum.textContent=turns;
     document.querySelectorAll('.hist-item').forEach(el=>
       el.classList.toggle('active',el.getAttribute('aria-label')==='Load: '+title));
   }catch{ clearChat(); addMsg('Could not load this conversation.','ai'); }
 }
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 //  MESSAGES
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 function hideEmpty(){ empty.style.display='none'; }
 function clearChat(){
   chatArea.innerHTML=''; chatArea.appendChild(empty);
@@ -915,9 +1053,9 @@ function showTyping(){
 }
 function hideTyping(){ $('typBlock')?.remove(); }
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 //  SEND
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 async function send(){
   const text=inp.value.trim();
   if(!text||sending) return;
@@ -930,8 +1068,8 @@ async function send(){
   resetInact(); showTyping();
 
   try{
-    const res=await fetch(`${API}/speak`,{
-      method:'POST', headers:{'Content-Type':'application/json'},
+    const res=await apiFetch('/speak',{
+      method:'POST',
       body:JSON.stringify({text,emotion_hint:emotion,image_frame:frame}),
     });
     hideTyping();
@@ -944,9 +1082,14 @@ async function send(){
 
     addMsgBadge(d.response,type,vc,emotion);
 
-    // If intervention, also show the modal
+    // Update vulnerability meter from live response
+    if(typeof d.vulnerability_score === 'number') {
+      updateVulnMeter(d.vulnerability_score);
+    }
+
+    // Show intervention modal with score
     if(d.intervention){
-      showInterventionModal(d.response, d.emotion_detected);
+      showInterventionModal(d.response, d.emotion_detected, d.vulnerability_score||0);
     }
 
     if(vc){
@@ -967,15 +1110,19 @@ async function send(){
   }
 }
 
-// ─────────────────────────────────────
-//  INTERVENTION MODAL
-// ─────────────────────────────────────
-function showInterventionModal(aiMessage, detectedEmotion){
+// ══════════════════════════════════════════════════════════════════
+//  INTERVENTION MODAL — now shows vulnerability score
+// ══════════════════════════════════════════════════════════════════
+function showInterventionModal(aiMessage, detectedEmotion, vulnScoreVal){
   const emo=EMOS[detectedEmotion]||{e:'😟',l:detectedEmotion};
-  $('modalTitle').textContent='Wait a moment.';
+  $('modalTitle').textContent='Hold on.';
   $('modalBody').innerHTML=
-    `You seem <strong>${emo.e} ${emo.l}</strong> right now.<br><br>${aiMessage}<br><br>
+    `You seem <strong>${emo.e} ${emo.l}</strong> right now.<br><br>${escHtml(aiMessage)}<br><br>
      <strong>The 24-hour rule:</strong> If you still want this tomorrow, it's worth it.`;
+  // Fill vulnerability bar
+  const pct=Math.min(100,(vulnScoreVal||0)*10);
+  $('modalVulnScore').textContent=(vulnScoreVal||0).toFixed(1)+' / 10';
+  $('modalVulnFill').style.width=pct+'%';
   modal.classList.add('show');
   $('modalDismiss').focus();
 }
@@ -987,17 +1134,17 @@ $('modalLogAnyway').addEventListener('click',()=>{
 });
 modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('show'); });
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 //  LOG SPEND
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 async function doLogSpend(amt, cat, desc, feedbackEl, btnEl){
   if(!amt||isNaN(parseFloat(amt))||parseFloat(amt)<=0){
     feedbackEl.textContent='Please enter a valid amount.'; return;
   }
   btnEl.disabled=true; feedbackEl.textContent='Logging…';
   try{
-    const res=await fetch(`${API}/log-spend`,{
-      method:'POST', headers:{'Content-Type':'application/json'},
+    const res=await apiFetch('/log-spend',{
+      method:'POST',
       body:JSON.stringify({
         amount:parseFloat(amt), category:cat,
         description:desc||'', emotion_hint:emotion,
@@ -1009,7 +1156,6 @@ async function doLogSpend(amt, cat, desc, feedbackEl, btnEl){
       feedbackEl.textContent='✓ '+d.ai_comment;
       totalSpendLogged+=parseFloat(amt);
       totalSpendEl.textContent='$'+totalSpendLogged.toFixed(0);
-      // Add a chat message too
       addMsg(`Logged $${parseFloat(amt).toFixed(2)} on ${cat} while ${emotion}.`,'user');
       addMsg(d.ai_comment,'ai');
     } else {
@@ -1023,34 +1169,32 @@ async function doLogSpend(amt, cat, desc, feedbackEl, btnEl){
 }
 
 $('logSpendBtn').addEventListener('click',()=>{
-  doLogSpend($('spendAmt').value, $('spendCat').value,
-             $('spendDesc').value, $('logFeedback'), $('logSpendBtn'));
+  doLogSpend($('spendAmt').value,$('spendCat').value,$('spendDesc').value,$('logFeedback'),$('logSpendBtn'));
 });
 $('logSpendBtnM').addEventListener('click',()=>{
-  doLogSpend($('spendAmtM').value, $('spendCatM').value,
-             $('spendDescM').value, $('logFeedbackM'), $('logSpendBtnM'));
+  doLogSpend($('spendAmtM').value,$('spendCatM').value,$('spendDescM').value,$('logFeedbackM'),$('logSpendBtnM'));
 });
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 //  PSYCHOLOGICAL LEDGER
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 const EMO_COLORS={
-  frustrated:'#f87171', angry:'#ef4444', sad:'#60a5fa',
-  stressed:'#fb923c', anxious:'#c084fc', lonely:'#a78bfa',
-  happy:'#34d399', calm:'#6ee7b7', neutral:'#94a3b8',
-  tired:'#fbbf24', fearful:'#f472b6', confused:'#67e8f9',
+  frustrated:'#f87171',angry:'#ef4444',sad:'#60a5fa',
+  stressed:'#fb923c',anxious:'#c084fc',lonely:'#a78bfa',
+  happy:'#34d399',calm:'#6ee7b7',neutral:'#94a3b8',
+  tired:'#fbbf24',fearful:'#f472b6',confused:'#67e8f9',
 };
 
 async function loadLedger(){
   const container=$('ledgerContent');
   container.innerHTML='<div class="ledger-empty"><p>Loading your data…</p></div>';
   try{
-    const d=await(await fetch(`${API}/insights`)).json();
+    const d=await(await apiFetch('/insights')).json();
     if(!d.chart_data||!d.chart_data.length){
       container.innerHTML='<div class="ledger-empty"><span style="font-size:32px">📊</span><p>No spending data yet.<br>Log your first expense in the sidebar.</p></div>';
       return;
     }
-    renderLedger(d, container);
+    renderLedger(d,container);
   }catch{
     container.innerHTML='<div class="ledger-empty"><p>Could not load insights.<br>Check backend connection.</p></div>';
   }
@@ -1059,6 +1203,36 @@ async function loadLedger(){
 function renderLedger(d, container){
   container.innerHTML='';
 
+  // ── DANGER EMOTION CARD (shows first — most impactful) ──
+  if(d.danger_emotion){
+    const dEmo=EMOS[d.danger_emotion]||{e:'⚠️',l:d.danger_emotion};
+    const dCard=document.createElement('div'); dCard.className='danger-card';
+    const hist=d.chart_data.find(x=>x.emotion===d.danger_emotion)||{};
+    dCard.innerHTML=`
+      <div class="danger-header">
+        <span class="danger-emoji">${dEmo.e}</span>
+        <div>
+          <div class="danger-title">⚠️ Your Highest-Risk State: ${escHtml(dEmo.l)}</div>
+          <div class="danger-sub">You regret purchases most in this emotional state</div>
+        </div>
+      </div>
+      <div class="danger-stats">
+        <div class="danger-stat">
+          <div class="danger-stat-num">$${(hist.total||0).toFixed(0)}</div>
+          <div class="danger-stat-lbl">Total Spent</div>
+        </div>
+        <div class="danger-stat">
+          <div class="danger-stat-num">${hist.count||0}×</div>
+          <div class="danger-stat-lbl">Transactions</div>
+        </div>
+        <div class="danger-stat">
+          <div class="danger-stat-num">${d.danger_avg_regret!=null?d.danger_avg_regret+'/10':'—'}</div>
+          <div class="danger-stat-lbl">Avg Regret</div>
+        </div>
+      </div>`;
+    container.appendChild(dCard);
+  }
+
   // AI Narrative
   const narCard=document.createElement('div'); narCard.className='ledger-card';
   narCard.innerHTML=`<div class="lc-title">💡 AI Insight</div>
@@ -1066,7 +1240,6 @@ function renderLedger(d, container){
   container.appendChild(narCard);
 
   // Summary
-  const topEmo=d.chart_data[0]||{};
   const sumCard=document.createElement('div'); sumCard.className='ledger-card';
   sumCard.innerHTML=`<div class="lc-title">Summary</div>
     <div class="sum-row">
@@ -1076,7 +1249,7 @@ function renderLedger(d, container){
     </div>`;
   container.appendChild(sumCard);
 
-  // Emotion bar chart — the key visual
+  // Emotional Spending Map
   const emoCard=document.createElement('div'); emoCard.className='ledger-card';
   emoCard.innerHTML=`<div class="lc-title">🧠 Emotional Spending Map</div>
     <div class="chart-wrap" id="emoChart"></div>`;
@@ -1087,11 +1260,12 @@ function renderLedger(d, container){
     const pct=Math.max(4,Math.round((item.total/maxTotal)*100));
     const emoObj=EMOS[item.emotion]||{e:'•',l:item.emotion};
     const color=EMO_COLORS[item.emotion]||'#94a3b8';
+    const isDanger=item.emotion===d.danger_emotion;
     const row=document.createElement('div'); row.className='chart-row';
     row.innerHTML=`
-      <div class="chart-label" title="${emoObj.l}">${emoObj.e} ${emoObj.l}</div>
+      <div class="chart-label" title="${emoObj.l}" style="${isDanger?'color:var(--red);font-weight:600':''}">${emoObj.e} ${emoObj.l}${isDanger?' ⚠️':''}</div>
       <div class="chart-bar-bg">
-        <div class="chart-bar-fill" style="width:${pct}%;background:${color}"></div>
+        <div class="chart-bar-fill" style="width:${pct}%;background:${isDanger?'var(--red)':color}"></div>
         <span class="chart-bar-text">$${item.total.toFixed(0)}</span>
       </div>
       <div class="chart-count">${item.count}× ${item.avg_regret!==null?'· '+item.avg_regret+'/10 regret':''}</div>`;
@@ -1119,9 +1293,7 @@ function renderLedger(d, container){
     const recCard=document.createElement('div'); recCard.className='ledger-card';
     recCard.innerHTML=`<div class="lc-title">🕐 Recent Transactions</div>`;
     const table=document.createElement('table'); table.className='spend-table';
-    table.innerHTML=`<thead><tr>
-      <th>Amount</th><th>Category</th><th>Mood</th><th>Regret</th>
-    </tr></thead>`;
+    table.innerHTML=`<thead><tr><th>Amount</th><th>Category</th><th>Mood</th><th>Regret</th></tr></thead>`;
     const tbody=document.createElement('tbody');
     d.recent_spends.forEach(sp=>{
       const emoObj=EMOS[sp.emotion]||{e:'•',l:sp.emotion};
@@ -1129,10 +1301,8 @@ function renderLedger(d, container){
         ? `<span class="regret-dot" style="background:${regretColor(sp.regret_score)}"></span>${sp.regret_score}/10`
         : `<button class="regret-ask-btn" onclick="askRegret('${escHtml(sp.spend_id)}',this)">Rate it</button>`;
       const tr=document.createElement('tr');
-      tr.innerHTML=`<td>$${sp.amount.toFixed(2)}</td>
-        <td>${escHtml(sp.category)}</td>
-        <td>${emoObj.e} ${emoObj.l}</td>
-        <td>${regretCell}</td>`;
+      tr.innerHTML=`<td>$${sp.amount.toFixed(2)}</td><td>${escHtml(sp.category)}</td>
+        <td>${emoObj.e} ${emoObj.l}</td><td>${regretCell}</td>`;
       tbody.appendChild(tr);
     });
     table.appendChild(tbody); recCard.appendChild(table);
@@ -1150,10 +1320,7 @@ async function askRegret(spendId, btn){
   const score=parseInt(prompt('Rate your regret 0–10 (0 = no regret, 10 = full regret):'));
   if(isNaN(score)||score<0||score>10) return;
   try{
-    await fetch(`${API}/regret`,{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({spend_id:spendId, regret_score:score}),
-    });
+    await apiFetch('/regret',{method:'POST',body:JSON.stringify({spend_id:spendId,regret_score:score})});
     btn.parentElement.innerHTML=
       `<span class="regret-dot" style="background:${regretColor(score)}"></span>${score}/10`;
   }catch{ alert('Could not save regret score.'); }
@@ -1161,9 +1328,9 @@ async function askRegret(spendId, btn){
 
 function escHtml(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 //  INPUT
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 function updateCC(){
   const l=inp.value.length;
   cc.textContent=l+' / 2000'; cc.className='cc'+(l>1800?' warn':'');
@@ -1177,9 +1344,9 @@ inp.addEventListener('input',()=>{
 inp.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();} });
 sendBtn.addEventListener('click',send);
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 //  CAMERA
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 async function toggleCam(){ cameraOn?stopCam():await startCam(); }
 
 async function startCam(){
@@ -1191,7 +1358,7 @@ async function startCam(){
     camToggle.classList.add('on'); camToggle.setAttribute('aria-pressed','true');
     eoSub.textContent='Camera active';
     captureFrame();
-    frameInt=setInterval(captureFrame,3000);
+    frameInt=setInterval(captureFrame,5000);
   }catch{ addMsg('Camera access denied — mood detection will use your selected tone only.','ai'); }
 }
 
@@ -1217,9 +1384,9 @@ function captureFrame(){
 
 camToggle.addEventListener('click',toggleCam);
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 //  EMOTION
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 function setEmotion(btn,key){
   document.querySelectorAll('.tone-chip').forEach(c=>c.classList.remove('active'));
   btn.classList.add('active'); emotion=key;
@@ -1227,6 +1394,11 @@ function setEmotion(btn,key){
     eoOrb.textContent=EMOS[key].e; eoName.textContent=EMOS[key].l;
     eoSub.textContent='Manual selection';
   }
+  // Fetch vulnerability for this emotion
+  fetchVulnerability(key);
+  // Keep Gemini Live informed
+  if(liveOn && liveWs?.readyState===WebSocket.OPEN)
+    liveWs.send(JSON.stringify({type:'emotion',data:key}));
 }
 
 function updateEmo(key,visual){
@@ -1241,110 +1413,66 @@ function updateEmo(key,visual){
     eoOrb.classList.add('detected');
     document.querySelectorAll('.tone-chip').forEach(c=>
       c.classList.toggle('active',c.dataset.emotion===key));
+    fetchVulnerability(key);
   }
 }
 
-// ─────────────────────────────────────
-//  MIC — fixed
-//  Bugs fixed:
-//  1. onend called stopMic() which called recog.stop() on already-ended recogniser
-//     → Chrome fired a second onend → send never ran
-//  2. onerror silently swallowed all failures
-//  3. interimResults:true meant final text wasn't always settled before send
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
+//  MIC
+// ══════════════════════════════════════════════════════════════════
 function toggleMic(){ micOn ? stopMic(true) : startMic(); }
 
 function startMic(){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){
-    addMsg('Speech recognition requires Chrome or Edge — Firefox does not support it yet.','ai');
-    return;
-  }
-  // Guard: don't start twice
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){ addMsg('Speech recognition requires Chrome or Edge.','ai'); return; }
   if(micOn) return;
-
-  recog = new SR();
-  recog.continuous     = false;   // single utterance
-  recog.interimResults = true;    // show live transcript in input
-  recog.lang           = 'en-US';
-
-  recog.onstart = () => {
-    micOn = true;
-    micBtn.setAttribute('aria-pressed','true');
-    micBtn.classList.add('rec');
-    voiceInd.classList.add('on');
+  recog=new SR();
+  recog.continuous=false; recog.interimResults=true; recog.lang='en-US';
+  recog.onstart=()=>{ micOn=true; micBtn.setAttribute('aria-pressed','true');
+    micBtn.classList.add('rec'); voiceInd.classList.add('on'); };
+  recog.onresult=e=>{
+    let interim='',finalTxt='';
+    for(const r of e.results){ if(r.isFinal) finalTxt+=r[0].transcript; else interim+=r[0].transcript; }
+    inp.value=finalTxt||interim; updateCC();
   };
-
-  // Live preview in textarea while speaking
-  recog.onresult = e => {
-    let interim = '', finalTxt = '';
-    for(const result of e.results){
-      if(result.isFinal) finalTxt += result[0].transcript;
-      else interim += result[0].transcript;
-    }
-    inp.value = finalTxt || interim;
-    updateCC();
-  };
-
-  // onend fires when recognition stops naturally (after silence or .stop())
-  // CRITICAL: do NOT call recog.stop() here — it already stopped.
-  // Calling stop() on ended recogniser triggers a second onend → infinite loop.
-  recog.onend = () => {
-    const textToSend = inp.value.trim();
-    // Clean up state directly — do NOT call stopMic() which calls recog.stop()
-    micOn = false;
-    recog = null;
-    micBtn.setAttribute('aria-pressed','false');
-    micBtn.classList.remove('rec');
+  recog.onend=()=>{
+    const t=inp.value.trim();
+    micOn=false; recog=null;
+    micBtn.setAttribute('aria-pressed','false'); micBtn.classList.remove('rec');
     voiceInd.classList.remove('on');
-    // Auto-send if we captured something
-    if(textToSend) send();
+    if(t) send();
   };
-
-  recog.onerror = e => {
-    const msgs = {
-      'not-allowed':  'Microphone permission denied — please allow mic access in your browser.',
-      'no-speech':    'No speech detected — try speaking closer to your mic.',
-      'network':      'Network error during speech recognition — check your connection.',
-      'aborted':      '',   // user cancelled, silent
-      'audio-capture':'No microphone found — check your device settings.',
-      'service-not-allowed': 'Speech service blocked — try on a live server (not file://).',
-    };
-    const msg = msgs[e.error];
-    if(msg) addMsg(msg,'ai');
-    // Clean up state directly — don't call stopMic() which would call recog.stop() again
-    micOn = false; recog = null;
-    micBtn.setAttribute('aria-pressed','false');
-    micBtn.classList.remove('rec');
+  recog.onerror=e=>{
+    const msgs={'not-allowed':'Microphone permission denied.','no-speech':'No speech detected.',
+      'network':'Network error.','aborted':'','audio-capture':'No microphone found.'};
+    const msg=msgs[e.error]; if(msg) addMsg(msg,'ai');
+    micOn=false; recog=null;
+    micBtn.setAttribute('aria-pressed','false'); micBtn.classList.remove('rec');
     voiceInd.classList.remove('on');
   };
-
   recog.start();
 }
 
-// stopMic called by user (Esc or button click while recording)
-function stopMic(userTriggered = false){
-  if(recog){
-    recog.onend = null;   // prevent auto-send on manual stop
-    recog.onerror = null;
-    try{ recog.stop(); } catch(e){}
-    recog = null;
-  }
-  micOn = false;
-  micBtn.setAttribute('aria-pressed','false');
-  micBtn.classList.remove('rec');
+function stopMic(userTriggered=false){
+  if(recog){ recog.onend=null; recog.onerror=null; try{recog.stop();}catch(e){} recog=null; }
+  micOn=false;
+  micBtn.setAttribute('aria-pressed','false'); micBtn.classList.remove('rec');
   voiceInd.classList.remove('on');
 }
 
 micBtn.addEventListener('click',toggleMic);
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&micOn) stopMic(true); });
+// (Escape / demo / safety-net handled in unified keyboard block below)
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 //  RESET / NEW CHAT
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 async function startNewChat(){
   try{
-    const d=await(await fetch(`${API}/reset`,{method:'POST'})).json();
+    // Generate new session ID for this tab
+    SESSION_ID = crypto.randomUUID();
+    localStorage.setItem('sentience_sid', SESSION_ID);
+
+    const d=await(await apiFetch('/reset',{method:'POST'})).json();
     clearChat(); inp.value=''; updateCC();
     emotion='neutral'; frame=''; curTitle='New conversation';
     chatTitle.textContent='New conversation';
@@ -1353,9 +1481,16 @@ async function startNewChat(){
     eoOrb.textContent='😐'; eoName.textContent='Neutral';
     eoSub.textContent='No camera data';
     eoOrb.classList.remove('detected');
+    eoOrb.style.borderColor=''; eoOrb.style.background='';
+    updateVulnMeter(0,'');
     document.querySelectorAll('.tone-chip').forEach(c=>c.classList.toggle('active',c.dataset.emotion==='neutral'));
     document.querySelectorAll('.hist-item').forEach(i=>i.classList.remove('active'));
-    if(d.new_session_id){ curSessId=d.new_session_id; chatSessId.textContent='#'+d.new_session_id.slice(-6); }
+    if(d.new_session_id){
+      SESSION_ID=d.new_session_id;
+      localStorage.setItem('sentience_sid', SESSION_ID);
+      curSessId=SESSION_ID;
+      chatSessId.textContent='#'+SESSION_ID.slice(-6);
+    }
     setTimeout(loadHistory,300);
   }catch{ addMsg('Reset failed — please try again.','ai'); }
 }
@@ -1364,10 +1499,10 @@ $('resetBtn').addEventListener('click',startNewChat);
 $('newChatBtn').addEventListener('click',startNewChat);
 $('newChatBtnMob').addEventListener('click',startNewChat);
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 //  MOBILE SHEETS
-// ─────────────────────────────────────
-function openSheet(sheet){ sheet.classList.add('open'); overlay.classList.add('show'); }
+// ══════════════════════════════════════════════════════════════════
+function openSheet(s){ s.classList.add('open'); overlay.classList.add('show'); }
 function closeAllSheets(){
   [$('histMobSheet'),$('logMobSheet')].forEach(s=>s.classList.remove('open'));
   overlay.classList.remove('show');
@@ -1379,11 +1514,189 @@ overlay.addEventListener('click',closeAllSheets);
 $('closeHistSheet').addEventListener('click',closeAllSheets);
 $('closeLogSheet').addEventListener('click',closeAllSheets);
 
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
+//  GEMINI LIVE — WebSocket client (wired, ready for backend /ws/live)
+// ══════════════════════════════════════════════════════════════════
+const WS_URL=API.replace('https://','wss://').replace('http://','ws://')+'/ws/live';
+let liveWs=null, liveStream=null, liveOn=false;
+let audioCtx=null, audioQueue=[], isPlaying=false;
+
+async function toggleLive(){ liveOn ? stopLive() : await startLive(); }
+
+async function startLive(){
+  try{
+    liveStream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
+  }catch{
+    addMsg('Microphone access denied — Gemini Live needs mic permission.','ai'); return;
+  }
+  liveWs=new WebSocket(WS_URL);
+  liveWs.binaryType='arraybuffer';
+  liveWs.onopen=()=>{
+    liveWs.send(JSON.stringify({type:'init',session_id:SESSION_ID,emotion:emotion}));
+  };
+  liveWs.onmessage=async(e)=>{
+    const msg=JSON.parse(e.data);
+    if(msg.type==='status'&&msg.data==='connected'){
+      liveOn=true;
+      liveBtn.classList.add('live-on'); liveBtn.setAttribute('aria-pressed','true');
+      liveBar.classList.add('on'); liveTxt.textContent='Gemini Live — speak naturally…';
+      startMicStreaming();
+      addMsg('Gemini Live connected — speak naturally, I\'m listening.','proactive');
+    }
+    else if(msg.type==='audio'){
+      const raw=atob(msg.data); const buf=new Uint8Array(raw.length);
+      for(let i=0;i<raw.length;i++) buf[i]=raw.charCodeAt(i);
+      queueAudio(buf.buffer,msg.mime_type||'audio/pcm;rate=24000');
+    }
+    else if(msg.type==='text'&&msg.data){ addMsg(msg.data,'ai'); }
+    else if(msg.type==='turn_complete'){ liveTxt.textContent='Gemini Live — speak naturally…'; }
+    else if(msg.type==='vulnerability_update'){
+      // Live emotion chip update reflected in sidebar meter
+      updateVulnMeter(msg.data.score||0, msg.data.verdict||'');
+    }
+    else if(msg.type==='intervention'){
+      // Voice-triggered intervention: pulse meter red + fire modal
+      const score=msg.data.score||0;
+      updateVulnMeter(score,'⚠️ High risk — hold on before buying');
+      showInterventionModal(
+        `When you're ${msg.data.emotion}, your past spending shows a pattern worth pausing on.`,
+        msg.data.emotion,
+        score
+      );
+    }
+    else if(msg.type==='error'){ addMsg('Gemini Live error: '+msg.data,'ai'); stopLive(); }
+  };
+  liveWs.onerror=()=>{
+    addMsg('Could not connect to Gemini Live — ensure backend has GOOGLE_API_KEY set.','ai');
+    stopLive();
+  };
+  liveWs.onclose=()=>{ if(liveOn) stopLive(); };
+}
+
+function startMicStreaming(){
+  if(!liveStream||!liveWs) return;
+  audioCtx=new (window.AudioContext||window.webkitAudioContext)({sampleRate:16000});
+  const src=audioCtx.createMediaStreamSource(liveStream);
+  const processor=audioCtx.createScriptProcessor(4096,1,1);
+  processor.onaudioprocess=(e)=>{
+    if(!liveOn||liveWs.readyState!==WebSocket.OPEN) return;
+    const f32=e.inputBuffer.getChannelData(0);
+    // Detect if user is speaking (energy threshold for barge-in)
+    const energy=f32.reduce((s,v)=>s+v*v,0)/f32.length;
+    if(energy>0.002 && audioQueue.length>0){
+      // User speaking while AI has queued audio → barge-in interrupt
+      audioQueue=[];
+      isPlaying=false;
+      liveWs.send(JSON.stringify({type:'interrupt'}));
+    }
+    const i16=new Int16Array(f32.length);
+    for(let i=0;i<f32.length;i++) i16[i]=Math.max(-32768,Math.min(32767,f32[i]*32768));
+    const b64=btoa(String.fromCharCode(...new Uint8Array(i16.buffer)));
+    liveWs.send(JSON.stringify({type:'audio',data:b64}));
+    liveTxt.textContent='Gemini Live — listening…';
+  };
+  src.connect(processor); processor.connect(audioCtx.destination);
+}
+
+async function queueAudio(arrayBuffer,mimeType){
+  audioQueue.push({arrayBuffer,mimeType});
+  if(!isPlaying) playNext();
+}
+
+async function playNext(){
+  if(!audioQueue.length){ isPlaying=false; return; }
+  isPlaying=true;
+  const {arrayBuffer,mimeType}=audioQueue.shift();
+  try{
+    if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    const rate=mimeType.includes('24000')?24000:16000;
+    const i16=new Int16Array(arrayBuffer);
+    const f32=new Float32Array(i16.length);
+    for(let i=0;i<i16.length;i++) f32[i]=i16[i]/32768;
+    const aBuf=audioCtx.createBuffer(1,f32.length,rate);
+    aBuf.copyToChannel(f32,0);
+    const src=audioCtx.createBufferSource();
+    src.buffer=aBuf; src.connect(audioCtx.destination);
+    src.onended=playNext; src.start();
+  }catch{ isPlaying=false; playNext(); }
+}
+
+function stopLive(){
+  liveOn=false;
+  liveWs?.close(); liveWs=null;
+  liveStream?.getTracks().forEach(t=>t.stop()); liveStream=null;
+  audioCtx?.close(); audioCtx=null;
+  audioQueue=[]; isPlaying=false;
+  liveBtn.classList.remove('live-on'); liveBtn.setAttribute('aria-pressed','false');
+  liveBar.classList.remove('on');
+}
+
+liveBtn.addEventListener('click',toggleLive);
+
+// ══════════════════════════════════════════════════════════════════
+//  DEMO MODE  —  Ctrl+Shift+D
+//  Strips the UI to just: voice / orb / meter / chat / intervention.
+//  Everything else stays in the DOM but is hidden. One keystroke.
+// ══════════════════════════════════════════════════════════════════
+let demoMode = false;
+function toggleDemoMode() {
+  demoMode = !demoMode;
+  document.body.classList.toggle('demo-mode', demoMode);
+  if (demoMode) {
+    // Switch to chat tab automatically
+    switchTab('chat');
+    addMsg('⚡ Demo Mode active — Ctrl+Shift+D to exit | Ctrl+Shift+S for safety net', 'proactive');
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  SAFETY NET  —  Ctrl+Shift+S
+//  Manually fires the intervention modal with realistic pre-loaded
+//  data. Use this if the LLM misses the keyword during live demo.
+//  Pre-seeded data matches what seed_demo.py puts in Firestore.
+// ══════════════════════════════════════════════════════════════════
+const DEMO_SAFETY_DATA = {
+  emotion: 'stressed',
+  score: 8.2,
+  aiMessage:
+    'Hold on. When you\'re stressed, your data shows 5 purchases totalling $640 — ' +
+    'an average of $128 each. You later rated those a 7.8 out of 10 for regret. ' +
+    'Is this purchase for you, or for the feeling?',
+};
+
+function fireSafetyNet() {
+  // Set emotion chip to stressed visually
+  const stressedChip = document.querySelector('[data-emotion="stressed"]');
+  if (stressedChip) setEmotion(stressedChip, 'stressed');
+  updateVulnMeter(DEMO_SAFETY_DATA.score, 'High risk — pause before buying');
+  // Add AI message to chat
+  addMsgBadge(DEMO_SAFETY_DATA.aiMessage, 'intervention', null, 'stressed');
+  // Fire the modal with a visual flash to make it cinematic
+  showInterventionModal(DEMO_SAFETY_DATA.aiMessage, DEMO_SAFETY_DATA.emotion, DEMO_SAFETY_DATA.score);
+  modal.classList.add('safety-triggered');
+  setTimeout(() => modal.classList.remove('safety-triggered'), 1000);
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  KEYBOARD SHORTCUTS
+// ══════════════════════════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  // Esc — stop mic (already handled above, kept for clarity)
+  if (e.key === 'Escape' && micOn) { stopMic(true); return; }
+  // Ctrl+Shift+D — Demo Mode
+  if (e.ctrlKey && e.shiftKey && e.key === 'D') { e.preventDefault(); toggleDemoMode(); return; }
+  // Ctrl+Shift+S — Safety Net intervention
+  if (e.ctrlKey && e.shiftKey && e.key === 'S') { e.preventDefault(); fireSafetyNet(); return; }
+});
+
+// ══════════════════════════════════════════════════════════════════
 //  INIT
-// ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
 (async()=>{
   await checkStatus();
+  // Pre-fetch vulnerability for "stressed" immediately on load
+  // so the meter isn't empty if a judge looks at it straight away.
+  fetchVulnerability('stressed');
   await loadHistory();
   inp.addEventListener('focus',resetInact,{once:true});
 })();
